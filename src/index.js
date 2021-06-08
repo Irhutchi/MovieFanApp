@@ -6,7 +6,7 @@ import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 
 /* note:
-      whenever routing configuration changes are made we must restart the development server.
+      whenever routing configuration changes are made you must restart the development server.
 */
 const App = () => {
   return (

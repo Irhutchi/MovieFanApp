@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { getGenres } from "../../api/tmdb-api";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -36,32 +37,17 @@ export default function FilterMoviesCard(props) {
       name: "All",
     },
   ]);
-  /*
-  const genres = [
-    {id: 1, name: "Animation"},
-    {id: 2, name: "Comedy"},
-    {id: 3, name: "Thriller"}
-  ]*/
 
   useEffect(() => {
-    fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        process.env.REACT_APP_TMDB_KEY
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json.genres);
-        return json.genres;
-      })
-      .then((apiGenres) => {
-        setGenres([genres[0], ...apiGenres]);
-      });
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const handleChange = (e, type, value) => {
-    e.preventDefault();
-    props.onUserInput(type, value)
+    e.preventDefault()
+    props.onUserInput(type, value)   // NEW
   };
   const handleTextChange = (e) => {
     handleChange(e, "name", e.target.value);
