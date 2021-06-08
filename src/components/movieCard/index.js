@@ -14,6 +14,7 @@ import StarRateIcon from "@material-ui/icons/StarRate";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import img from "../../images/film-poster-placeholder.png";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -26,9 +27,30 @@ const useStyles = makeStyles({
 export default function MovieCard(props) {
   const classes = useStyles();
   const movie = props.movie;
+
+  const handleAddToFavorite = (e) => {
+    e.preventDefault();
+    props.selectFavorite(movie.id);
+  };
+
   return (
     <Card className={classes.card}>
-      <CardHeader className={classes.header} title={movie.title} />
+      <CardHeader
+        className={classes.header}
+        avatar={
+          movie.favorite ? (
+            <Avatar className={classes.avatar}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : null
+        }
+        title={
+          <Typography variant="h5" component="p">
+            {movie.title}{" "}
+          </Typography>
+        }
+      />
+
       <CardMedia
         className={classes.media}
         image={
@@ -60,7 +82,7 @@ export default function MovieCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={null}>
+        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
         <Link to={`/movies/${movie.id}`}>

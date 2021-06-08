@@ -28,10 +28,17 @@ const MovieListPage = (props) => {
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
     });
 
-    const handleChange = (type, value) => {
-      if( type === "name") setNameFilter(value);
-      else setGenreFilter(value);
-    };
+  const handleChange = (type, value) => {
+    if (type === "name") setNameFilter(value);
+    else setGenreFilter(value);
+  };
+
+  const addToFavorites = (movieId) => {
+    const updatedMovies = movies.map((m) =>
+      m.id === movieId ? { ...m, favorite: true } : m
+    );
+    setMovies(updatedMovies);
+  };
 
   useEffect(() => {
     fetch(
@@ -48,7 +55,7 @@ const MovieListPage = (props) => {
       .then((movies) => {
         setMovies(movies);
       });
-      //The 'eslint' line in the code stops the ESLint tool from reporting a (annoying) warning message.
+    //The 'eslint' line in the code stops the ESLint tool from reporting a (annoying) warning message.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //FilterMoviesCard is passed a callback function that it invokes whenever the user changes a filtering input.
@@ -65,7 +72,7 @@ const MovieListPage = (props) => {
             genreFilter={genreFilter}
           />
         </Grid>
-        <MovieList movies={displayedMovies}></MovieList>
+        <MovieList movies={displayedMovies} selectFavorite={addToFavorites} />
       </Grid>
     </Grid>
   );
