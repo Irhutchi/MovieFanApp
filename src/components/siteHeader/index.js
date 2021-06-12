@@ -50,7 +50,7 @@ const SiteHeader = ( { history }) => {
               TMDB Client
             </Typography>
             <Typography variant="h6" className={classes.title}>
-              All you ever wanted to know about Movies!
+              Explore movies and TV shows
             </Typography>
               {isMobile ? (
                 <>
