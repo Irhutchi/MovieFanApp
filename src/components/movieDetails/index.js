@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
@@ -8,6 +8,8 @@ import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import MovieReviews from "../movieReviews";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = (props) => {
+const MovieDetails = ({ movie }) => {
   const classes = useStyles();
-  const movie = props.movie;
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
@@ -67,7 +69,11 @@ const MovieDetails = (props) => {
 
       <Paper component="ul" className={classes.root}>
         <li>
-          <Chip label="Production Countries" className={classes.chip} color="primary" />
+          <Chip
+            label="Production Countries"
+            className={classes.chip}
+            color="primary"
+          />
         </li>
         {movie.production_countries.map((p) => (
           <li key={p.name}>
@@ -75,10 +81,22 @@ const MovieDetails = (props) => {
           </li>
         ))}
       </Paper>
-      <Fab color="secondary" variant="extended" className={classes.fab}>
+      <Fab
+        color="secondary"
+        variant="extended"
+        onClick={() => setDrawerOpen(true)}
+        className={classes.fab}
+      >
         <NavigationIcon />
         Reviews
       </Fab>
+      <Drawer
+        anchor="top"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <MovieReviews movie={movie} />
+      </Drawer>
     </>
   );
 };
