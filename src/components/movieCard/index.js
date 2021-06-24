@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MoviesContext } from "../../contexts/moviesContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -24,14 +25,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard(props) {
+export default function MovieCard({ movie }) {
   const classes = useStyles();
-  const movie = props.movie;
+  const { favorites, addToFavorites } = useContext(MoviesContext);
+
+  if (favorites.find((id) => id === movie.id)) {
+    movie.favorite = true;
+  } else {
+    movie.favorite = false
+  }
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
-    props.selectFavorite(movie.id);
+    addToFavorites(movie);
   };
+
 
   return (
     <Card className={classes.card}>
