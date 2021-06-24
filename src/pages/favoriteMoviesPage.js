@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
+import RemoveFromFavoritesIcon from "../components/cardIcons/removeFromFavorites";
+import WriteReview from "../components/cardIcons/writeReview";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
-import Spinner from '../components/spinner'
-
+import Spinner from "../components/spinner";
 
 const FavoriteMoviesPage = (props) => {
-  const {favorites: movieIds } = useContext(MoviesContext);
-  
+  const { favorites: movieIds } = useContext(MoviesContext);
+
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries(
     movieIds.map((movieId) => {
@@ -25,14 +26,19 @@ const FavoriteMoviesPage = (props) => {
     return <Spinner />;
   }
   const movies = favoriteMovieQueries.map((q) => q.data);
-  const toDo = () => true;
-
 
   return (
     <PageTemplate
       title="Favourite Movies"
       movies={movies}
-      selectFavorite={toDo}
+      action={(movie) => {
+        return (
+          <>
+            <RemoveFromFavoritesIcon movie={movie} />
+            <WriteReview movie={movie} />
+          </>
+        );
+      }}
     />
   );
 };

@@ -3,6 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
 import { getMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
+import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 /*
   The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
   The first argument is used as the cache entry key
@@ -22,13 +23,15 @@ const HomePage = (props) => {
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true 
+  
 
   return (
     <PageTemplate
       title="Discover Movies"
       movies={movies}
-      selectFavorite={addToFavorites}
+      action={(movie) => {
+        return <AddToFavoritesIcon movie={movie} />
+      }}
     />
   );
 };
