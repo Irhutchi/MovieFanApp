@@ -6,7 +6,7 @@ import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import movieReviewPage from "./pages/movieReviewPage";
-
+import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 /* note:
       whenever routing configuration changes are made you must restart the development server.
 */
@@ -16,6 +16,7 @@ const App = () => {
      <SiteHeader />  
       <Switch>
         <Route path="/reviews/:id" component={movieReviewPage} />
+        <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
         <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
         <Route path="/movies/:id" component={MoviePage} />
         <Route path="/" component={HomePage} />

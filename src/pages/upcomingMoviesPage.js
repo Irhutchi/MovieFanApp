@@ -1,34 +1,29 @@
-import React from "react";
-import PageTemplate from "../components/templateMovieListPage";
-import { getMovies } from "../api/tmdb-api";
+import React, { useState, useEffect } from "react";
+import PageTemplate from '../components/templateMovieListPage';
+import { getUpcomingMovies } from "../api/tmdb-api";
 
 const UpcomingMoviesPage = (props) => {
   const [movies, setMovies] = useState([]);
-  const upcoming = movies.filter((u) => u.upcoming);
-  // Get movies from local storage.
-  const movies = JSON.parse(localStorage.getItem("upcoming")); 
-
-  const upcomingMovies = (movieId) => {
-    const updatedMovies = movies.map((u) =>
-      u.id === movieId ? { ...u, upcoming: true } : u
+  const favorites = movies.filter(m => m.favorite)
+  localStorage.setItem('favorites', JSON.stringify(favorites))
+  const addToFavorites = (movieId) => {
+    const upcomingMovies = movies.map((m) =>
+      m.id === movieId ? { ...m, favorite: true } : m
     );
-    setMovies(updatedMovies);
+    setMovies(upcomingMovies);
   };
-
   useEffect(() => {
-    getMovies().then(movies => {
+    getUpcomingMovies().then(movies => {
       setMovies(movies);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <PageTemplate
-      title="Discover Movies"
+      title='Upcoming Movies'
       movies={movies}
-      selectFavorite={upcomingMovies}
+      selectFavorite={addToFavorites}
     />
   );
 };
-
 export default UpcomingMoviesPage;

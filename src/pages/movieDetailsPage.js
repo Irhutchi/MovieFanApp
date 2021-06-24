@@ -1,22 +1,9 @@
-<<<<<<< HEAD
-import React from "react";
-import { withRouter } from "react-router-dom";
-import MovieDetails from "../components/movieDetails";
-import PageTemplate from "../components/templateMoviePage";
-import useMovie from "../hooks/useMovie";
 
-const MovieDetailsPage = (props) => {
-  //comnst id allows the component to extract the movie id from the browser's parameterized URL address
-  const { id } = props.match.params;
-  const [movie] = useMovie(id);
-
-=======
 import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from "../api/tmdb-api";
 import { withRouter } from "react-router-dom";
-
 
 const MovieDetailsPage = (props) => {
   //comnst id allows the component to extract the movie id from the browser's parameterized URL address
@@ -33,7 +20,6 @@ const MovieDetailsPage = (props) => {
   }, [id]);
 
   //In the below  code the children prop will be bound to: <MovieDetails movie={movie} />
->>>>>>> review-feature
   return (
     <>
       {movie ? (
@@ -50,8 +36,5 @@ const MovieDetailsPage = (props) => {
 };
 
 export default withRouter(MovieDetailsPage);
-<<<<<<< HEAD
 
 
-=======
->>>>>>> review-feature
