@@ -9,7 +9,7 @@ export const getMovies = async () => {
 };
   
 export const getMovie = async ( args ) => {
-  console.log(args);
+  // console.log(args);
   // eslint-disable-next-line no-unused-vars
   const [prefix, { id }] = args.queryKey;
   const response = await fetch(

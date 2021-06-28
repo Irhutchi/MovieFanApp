@@ -9,6 +9,7 @@ import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import movieReviewPage from "./pages/movieReviewPage";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
+import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import MoviesContextProvider from "./contexts/moviesContext";
 
 /* Query Client will manage the cache in the browser */
@@ -32,13 +33,10 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Switch>
+          <Route exact path="/reviews/form" component={AddMovieReviewPage} />
           <Route path="/reviews/:id" component={movieReviewPage} />
           <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
-          <Route
-            exact
-            path="/movies/favorites"
-            component={FavoriteMoviesPage}
-          />
+          <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
           <Route path="/movies/:id" component={MoviePage} />
           <Route path="/" component={HomePage} />
           <Redirect from="*" to="/" />

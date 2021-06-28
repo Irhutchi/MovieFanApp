@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
-import RemoveFromFavoritesIcon from "../components/cardIcons/removeFromFavorites";
+import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
@@ -34,7 +34,7 @@ const FavoriteMoviesPage = (props) => {
       action={(movie) => {
         return (
           <>
-            <RemoveFromFavoritesIcon movie={movie} />
+            <RemoveFromFavorites movie={movie} />
             <WriteReview movie={movie} />
           </>
         );
