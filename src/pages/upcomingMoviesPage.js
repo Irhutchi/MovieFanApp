@@ -3,7 +3,7 @@ import PageTemplate from '../components/templateMovieListPage';
 import { getUpcomingMovies } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import { useQuery } from 'react-query';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
+import PlaylistAddSharpIcon from '@material-ui/icons/PlaylistAddSharp';
 
 const UpcomingMoviesPage = (props) => {
   // useQuery used to cache upcoming movies page data
@@ -28,7 +28,7 @@ const UpcomingMoviesPage = (props) => {
         title="Upcoming Movies"
         movies={movies}
         action={(movie) => {
-          return <AddToFavoritesIcon movie={movie} />
+          return <PlaylistAddSharpIcon fontSize="large" color="action" movie={movie} />
         }}
       />    
     );
