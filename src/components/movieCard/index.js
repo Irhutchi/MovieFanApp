@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard({ movie, action }) {
+function MovieCard({ movie, action }) {
   const classes = useStyles();
   const { favorites, addToFavorites } = useContext(MoviesContext);
 
@@ -33,12 +33,6 @@ export default function MovieCard({ movie, action }) {
   } else {
     movie.favorite = false
   }
-
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
-
 
   return (
     <Card className={classes.card}>
@@ -90,12 +84,14 @@ export default function MovieCard({ movie, action }) {
       </CardContent>
       <CardActions disableSpacing>
         {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
+          <Link to={`/movies/${movie.id}`}>
+              <Button variant="outlined" size="medium" color="primary">
+                  More Info ...
+              </Button>
+          </Link>
       </CardActions>
     </Card>
   );
-}
+};
+
+export default MovieCard;
