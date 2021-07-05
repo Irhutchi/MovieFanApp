@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from "react";
+
+import React from "react";
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from "../api/tmdb-api";
 import { withRouter } from "react-router-dom";
-
+import { useQuery } from "react-query";
+import Spinner from '../components/spinner';
 
 const MovieDetailsPage = (props) => {
-  //comnst id allows the component to extract the movie id from the browser's parameterized URL address
+  //const id allows the component to extract the movie id from the browser's parameterized URL address
   const { id } = props.match.params;
-  const [movie, setMovie] = useState(null);
-  //movie state variable is initialized to null (boolean false) 
-  //but it is eventually assigned to an object (boolean true)
 
-  //uses the API's movie endpoint to get the full details on the movie
-  useEffect(() => {
-    getMovie(id).then((movie) => {
-      setMovie(movie);
-    });
-  }, [id]);
+  const { data: movie, error, isLoading, isError } = useQuery(
+    ["movie", { id: id }],
+    getMovie
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
 
   //In the below  code the children prop will be bound to: <MovieDetails movie={movie} />
   return (
@@ -36,3 +41,5 @@ const MovieDetailsPage = (props) => {
 };
 
 export default withRouter(MovieDetailsPage);
+
+

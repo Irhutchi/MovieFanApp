@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { getMovies } from "../api/tmdb-api";
+import { useQuery } from 'react-query'
+import Spinner from '../components/spinner'
+import {getMovies} from '../api/tmdb-api'
+import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+/*
+  The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
+  The first argument is used as the cache entry key
+*/
 
 const HomePage = (props) => {
-  const [movies, setMovies] = useState([]);
-  const favorites = movies.filter((m) => m.favorite);
-  localStorage.setItem("favorites", JSON.stringify(favorites));
+  const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
 
-  const addToFavorites = (movieId) => {
-    const updatedMovies = movies.map((m) =>
-      m.id === movieId ? { ...m, favorite: true } : m
-    );
-    setMovies(updatedMovies);
-  };
+  if (isLoading) {
+    return <Spinner />
+  }
 
-  useEffect(() => {
-    getMovies().then(movies => {
-      setMovies(movies);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const movies = data.results;
+
+  // Redundant, but necessary to avoid app crashing.
+  const favorites = movies.filter(m => m.favorite)
+  localStorage.setItem('favorites', JSON.stringify(favorites))
 
   return (
     <PageTemplate
       title="Discover Movies"
       movies={movies}
-      selectFavorite={addToFavorites}
-    />
+      action={(movie) => {
+        return <AddToFavoritesIcon movie={movie} />
+      }}
+    />    
   );
 };
+
 export default HomePage;
